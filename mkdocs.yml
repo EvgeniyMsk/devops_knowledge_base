@@ -1,0 +1,28 @@
+site_name: DevOps база знаний
+site_url: https://devops.evgeniymsk.ru/
+nav:
+  - На главную: index/index.md
+  - Networking: networking/networking.md
+  - Git: git/git.md
+  - Linux: linux/linux.md
+  - IaC:
+    - Ansible: iac/ansible.md
+    - Terrarofm: iac/terraform.md
+  - Docker: docker/docker.md
+  - Kubernetes: kubernetes/kubernetes.md
+  - CI/CD: ci-cd/ci-cd.md
+  - База данных: database/database.md
+  - Обратная связь: contact/contact.md
+
+theme:
+  name: material
+  language: ru
+  features:
+    - content.code.copy
+    - navigation.top
+    - navigation.instant          # быстрые переходы
+    - navigation.instant.progress # полоска загрузки
+    - navigation.tracking         # якорь в URL
+    - navigation.tabs              # вкладки в шапке
+    - navigation.path             # хлебные крошки
+    - toc.follow  
