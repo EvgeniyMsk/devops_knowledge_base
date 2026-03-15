@@ -21,6 +21,7 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+materials/
 
 # Локальные настройки (если появятся)
 # .env.local
