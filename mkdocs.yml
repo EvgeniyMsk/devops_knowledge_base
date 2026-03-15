@@ -1,17 +1,48 @@
 site_name: DevOps база знаний
 site_url: https://devops.evgeniymsk.ru/
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
 nav:
-  - На главную: index/index.md
+  - На главную: index.md
   - Networking: networking/networking.md
-  - Git: git/git.md
+  - Git:
+    - Обзор: git/git.md
+    - 1. Базис: git/topic-1-basis.md
+    - 2. Индекс (staging): git/topic-2-staging.md
+    - 3. Ветки и слияние: git/topic-3-branches.md
+    - 4. Remote и синхронизация: git/topic-4-remote.md
+    - 5. Отмена и восстановление: git/topic-5-undo.md
+    - 6. Продвинутые операции: git/topic-6-advanced.md
+    - 7. Конфигурация и практики: git/topic-7-config.md
+    - 8. Git в CI/CD: git/topic-8-cicd.md
   - Linux: linux/linux.md
   - IaC:
     - Ansible: iac/ansible.md
     - Terrarofm: iac/terraform.md
-  - Docker: docker/docker.md
-  - Kubernetes: kubernetes/kubernetes.md
-  - CI/CD: ci-cd/ci-cd.md
-  - База данных: database/database.md
+  - Docker:
+    - Обзор: docker/docker.md
+    - 1. Базис: docker/topic-1-basis.md
+  - Kubernetes: 
+    - Kubernetes: kubernetes/kubernetes.md
+    - Helm: kubernetes/helm.md
+  - CI/CD:
+    - Jenkins: ci-cd/jenkins.md
+    - GitLab: ci-cd/gitlab.md
+  - GitOps:
+    - ArgoCD: gitops/argocd.md
+  - База данных: 
+    - PostgreSQL: database/postgresql.md
+    - MySQL: database/mysql.md
+    - MongoDB: database/mongodb.md
+    - Redis: database/redis.md
+  - Брокеры сообщений:
+    - RabbitMQ: message-broker/rabbitmq.md
+    - Kafka: message-broker/kafka.md
+    - Nats: message-broker/nats.md
   - Обратная связь: contact/contact.md
 
 theme:

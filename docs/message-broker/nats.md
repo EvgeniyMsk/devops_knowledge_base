@@ -1,0 +1,3 @@
+# Nats
+
+## Project layout

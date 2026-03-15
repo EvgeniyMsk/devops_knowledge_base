@@ -1,0 +1,3 @@
+# Redis
+
+## Project layout

@@ -1,3 +1,3 @@
-# CI/CD
+# Kafka
 
 ## Project layout
