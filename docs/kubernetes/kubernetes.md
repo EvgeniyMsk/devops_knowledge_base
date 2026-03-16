@@ -1,7 +1,5 @@
 # Kubernetes
-
-Материалы по Kubernetes: база (Linux, сеть, контейнеры), архитектура кластера, объекты и контроллеры, практика. Разделы опираются на планы в `materials/kubernetes/` и содержат определения, примеры и ссылки на документацию.
-
+![Kubernetes[200]](./images/welcome.webp)
 ## Разделы
 
 - [**1. База: Linux, сеть и контейнеры**](topic-1-basis.md) — почему Kubernetes работает именно так: namespaces и cgroups, iptables/nftables, TCP/IP, DNS, NAT, балансировка L4/L7, TLS/mTLS; образы (слои, ENTRYPOINT/CMD, multi-stage, безопасность), OCI runtime (containerd, runc). Закрытие пробелов перед углублением в K8s.

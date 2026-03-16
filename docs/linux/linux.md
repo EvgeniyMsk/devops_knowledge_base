@@ -1,7 +1,5 @@
 # Linux
-
-Материалы по архитектуре и администрированию Linux: как устроена ОС, системные вызовы, systemd, практика отладки. Разделы опираются на планы в `materials/linux/` и содержат определения, примеры и ссылки на документацию.
-
+![Linux[200]](./images/welcome.jpg)
 ## Разделы
 
 - [**1. Архитектура Linux и основы ОС**](topic-1-architecture.md) — kernel space vs user space, syscalls (fork, exec, read, write), процессы и потоки, systemd и unit-файлы, targets (runlevels), FHS; практика: загрузка до multi-user.target, разбор unit-файла, strace.

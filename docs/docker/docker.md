@@ -1,7 +1,5 @@
 # Docker
-
-Материалы по Docker структурированы по разделам. Каждый раздел опирается на план в `materials/docker/` и содержит определения терминов, примеры кода, практики из production, паттерны и антипаттерны, а также ссылки на дополнительное чтение.
-
+![Docker[200]](./images/welcome.png)
 ## Разделы
 
 - [**1. Необходимый базис**](topic-1-basis.md) — почему Docker работает именно так: namespaces (pid, net, mount, user), cgroups (cpu, memory, blkio), overlayfs, сеть (bridge, veth, iptables, NAT, port mapping), PID 1, сигналы, зомби-процессы; контейнер vs VM; паттерны и антипаттерны; production.
