@@ -8,7 +8,17 @@ markdown_extensions:
 
 nav:
   - На главную: index.md
-  - Networking: networking/networking.md
+  - Networking:
+    - Обзор: networking/networking.md
+    - 1. Базовая теория сетей: networking/topic-1-basis.md
+    - 2. IP-сети и маршрутизация: networking/topic-2-ip-routing.md
+    - 3. TCP и UDP: networking/topic-3-tcp-udp.md
+    - 4. DNS: networking/topic-4-dns.md
+    - 5. HTTP и HTTPS (L7): networking/topic-5-http-https.md
+    - 6. Linux Networking: networking/topic-6-linux-networking.md
+    - 7. Load Balancing и Proxy: networking/topic-7-load-balancing-proxy.md
+    - 8. Kubernetes Networking: networking/topic-8-kubernetes-networking.md
+    - 9. Observability и отладка: networking/topic-9-observability-troubleshooting.md
   - Git:
     - Обзор: git/git.md
     - 1. Базис: git/topic-1-basis.md
