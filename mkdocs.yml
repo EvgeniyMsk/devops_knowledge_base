@@ -29,7 +29,18 @@ nav:
     - 6. Продвинутые операции: git/topic-6-advanced.md
     - 7. Конфигурация и практики: git/topic-7-config.md
     - 8. Git в CI/CD: git/topic-8-cicd.md
-  - Linux: linux/linux.md
+  - Linux:
+    - Обзор: linux/linux.md
+    - 1. Архитектура и основы ОС: linux/topic-1-architecture.md
+    - 2. Файловая система и диски: linux/topic-2-filesystem-disks.md
+    - 3. Пользователи и безопасность: linux/topic-3-users-security.md
+    - 4. Процессы, CPU, память: linux/topic-4-processes-cpu-memory.md
+    - 5. Сеть в Linux: linux/topic-5-networking.md
+    - 6. Логи и observability: linux/topic-6-logs-observability.md
+    - 7. Bash и shell scripting: linux/topic-7-bash-scripting.md
+    - 8. Управление пакетами: linux/topic-8-package-management.md
+    - 9. Linux и контейнеры: linux/topic-9-linux-containers.md
+    - 10. Troubleshooting: linux/topic-10-troubleshooting-mindset.md
   - IaC:
     - Ansible: iac/ansible.md
     - Terrarofm: iac/terraform.md
@@ -49,8 +60,19 @@ nav:
     - 12. Отладка и troubleshooting: docker/topic-12-troubleshooting.md
     - 13. Docker и Kubernetes: docker/topic-13-kubernetes.md
     - 14. Справочник CLI: docker/topic-14-cli-reference.md
-  - Kubernetes: 
-    - Kubernetes: kubernetes/kubernetes.md
+  - Kubernetes:
+    - Обзор: kubernetes/kubernetes.md
+    - 1. База (Linux, сеть, контейнеры): kubernetes/topic-1-basis.md
+    - 2. Архитектура: kubernetes/topic-2-architecture.md
+    - 3. Workloads и API: kubernetes/topic-3-workloads-api.md
+    - 4. Сеть в Kubernetes: kubernetes/topic-4-networking.md
+    - 5. Безопасность: kubernetes/topic-5-security.md
+    - 6. Хранилище: kubernetes/topic-6-storage.md
+    - 7. Наблюдаемость: kubernetes/topic-7-observability.md
+    - 8. Автомасштабирование и отказоустойчивость: kubernetes/topic-8-autoscaling-resilience.md
+    - 9. CI/CD и GitOps: kubernetes/topic-9-cicd-gitops.md
+    - 10. Отладка и эксплуатация: kubernetes/topic-10-troubleshooting-production.md
+    - 11. Архитектура и Best Practices: kubernetes/topic-11-architecture-best-practices.md
     - Helm: kubernetes/helm.md
   - CI/CD:
     - Jenkins: ci-cd/jenkins.md

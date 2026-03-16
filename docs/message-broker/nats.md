@@ -1,3 +1,3 @@
 # Nats
 
-## Project layout
+## Раздел в разработке

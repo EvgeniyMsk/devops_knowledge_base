@@ -1,3 +1,3 @@
 # ArgoCD
 
-## Project layout
+## Раздел в разработке

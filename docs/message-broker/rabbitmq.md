@@ -1,3 +1,3 @@
 # RabbitMQ
 
-## Project layout
+## Раздел в разработке
