@@ -80,7 +80,14 @@ nav:
   - GitOps:
     - ArgoCD: gitops/argocd.md
   - База данных: 
-    - PostgreSQL: database/postgresql.md
+    - PostgreSQL:
+      - Обзор: database/postgresql.md
+      - 1. База (архитектура, конфигурация, безопасность): database/postgresql/topic-1-basis.md
+      - 2. Эксплуатация и стабильность: database/postgresql/topic-2-operations-stability.md
+      - 3. High Availability и масштабирование: database/postgresql/topic-3-ha-scaling.md
+      - 4. Производительность и диагностика: database/postgresql/topic-4-performance-diagnostics.md
+      - 5. Мониторинг и алертинг: database/postgresql/topic-5-monitoring-alerting.md
+      - 6. Автоматизация и DevOps: database/postgresql/topic-6-automation-devops.md
     - MySQL: database/mysql.md
     - MongoDB: database/mongodb.md
     - Redis: database/redis.md
