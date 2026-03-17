@@ -1,6 +1,7 @@
 # 4. Производительность и диагностика: запросы, EXPLAIN, индексы
 
-**Цель:** уметь диагностировать производительность запросов: читать EXPLAIN и EXPLAIN ANALYZE, различать sequential scan и index scan; использовать pg_stat_statements и auto_explain; понимать типы индексов (B-tree, GIN, GiST) и их влияние на запись, REINDEX и bloat индексов. В разделе — примеры кода и SQL с комментариями и best practices для production.
+---
+Как диагностировать производительность запросов: читать EXPLAIN и EXPLAIN ANALYZE, различать sequential scan и index scan; использовать pg_stat_statements и auto_explain; понимать типы индексов (B-tree, GIN, GiST) и их влияние на запись, REINDEX и bloat индексов. В разделе — примеры кода и SQL с комментариями и best practices для production.
 
 ---
 

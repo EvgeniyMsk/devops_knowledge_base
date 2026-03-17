@@ -1,6 +1,7 @@
 # 8. Kubernetes Networking
 
-**Цель:** понимать, как устроена сеть в Kubernetes: Pod IP, Service (ClusterIP, NodePort, LoadBalancer), kube-proxy (iptables/ipvs), CNI (Calico, Cilium, Flannel), Ingress и L7-маршрутизация, NetworkPolicy. Уметь ответить: как под из namespace A ходит в под из namespace B и почему NetworkPolicy может не работать.
+---
+Pod IP, Service (ClusterIP/NodePort/LoadBalancer), kube-proxy (iptables/ipvs), CNI, Ingress/L7 и NetworkPolicy + типовые ответы «как ходит трафик между namespace» и почему политики могут не работать.
 
 ---
 

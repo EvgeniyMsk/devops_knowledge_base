@@ -1,6 +1,7 @@
 # 1. Архитектура Linux и основы ОС
 
-**Цель:** понимать, как система работает изнутри, а не просто выполнять команды: kernel space vs user space, системные вызовы, процессы и потоки, systemd и unit-файлы, цели (targets), FHS. Уметь проследить запуск до multi-user.target, разобрать unit сервиса и использовать strace для анализа вызовов ядра.
+---
+Kernel space vs user space, syscalls, процессы и потоки, systemd/units, targets и FHS, а также базовая отладка через strace.
 
 ---
 

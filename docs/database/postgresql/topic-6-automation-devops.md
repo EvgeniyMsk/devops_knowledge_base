@@ -1,6 +1,7 @@
 # 6. Автоматизация и DevOps: PostgreSQL в Kubernetes, IaC, миграции
 
-**Цель:** понимать, как запускать и автоматизировать PostgreSQL в контексте DevOps: ограничения StatefulSet и persistent volumes в Kubernetes, когда Postgres не стоит поднимать в K8s; операторы (Zalando, CrunchyData); IaC (Ansible, Terraform для managed DB) и миграции схемы (Flyway, Liquibase). В разделе — примеры кода и конфигурации с комментариями и best practices для production.
+---
+Ограничения StatefulSet и persistent volumes в Kubernetes, когда Postgres не стоит поднимать в K8s; операторы (Zalando, CrunchyData); IaC (Ansible, Terraform для managed DB) и миграции схемы (Flyway, Liquibase). В разделе — примеры кода и конфигурации с комментариями и best practices для production.
 
 ---
 
@@ -202,7 +203,7 @@ flyway -url=jdbc:postgresql://$DB_HOST/mydb -user=$DB_USER -password=$DB_PASSWOR
 
 - [Zalando postgres-operator](https://github.com/zalando/postgres-operator)
 - [Crunchy Data PostgreSQL Operator (PGO)](https://www.crunchydata.com/products/crunchy-postgresql-operator)
-- [Kubernetes — 6. Хранилище](../../kubernetes/topic-6-storage.md) — PVC, StatefulSet
+- [Kubernetes — 6. Хранилище](../../k8s/k8s/topic-6-storage.md) — PVC, StatefulSet
 - [Flyway](https://flywaydb.org/)
 - [Liquibase](https://www.liquibase.org/)
 - [3. High Availability и масштабирование](topic-3-ha-scaling.md) — репликация, Patroni

@@ -1,6 +1,27 @@
 # 7. Наблюдаемость в Kubernetes (Observability)
 
-**Цель:** понимать, что происходит в кластере и приложениях: мониторинг (Prometheus, kube-state-metrics, Node Exporter), алертинг (Alertmanager, SLO/SLA/SLI), логирование (EFK/ECK/Loki, best practices для stdout), трейсинг (OpenTelemetry, Jaeger/Tempo). В разделе — примеры манифестов с комментариями и best practices для production.
+---
+Мониторинг (Prometheus, kube-state-metrics, Node Exporter), алертинг (Alertmanager, SLO/SLA/SLI), логирование (EFK/ECK/Loki, best practices для stdout), трейсинг (OpenTelemetry, Jaeger/Tempo). Примеры манифестов с комментариями и best practices для production.
+
+---
+
+## Термины и сущности
+
+| Термин | Определение |
+|--------|-------------|
+| **Observability (наблюдаемость)** | Возможность понимать состояние системы по внешним данным: метрики, логи, трейсы; в Kubernetes — состояние нод, подов, приложений. |
+| **Метрики** | Числовые показатели во времени (CPU, память, RPS, latency); собираются по pull (Prometheus) или push; хранятся во временных рядах. |
+| **Prometheus** | Система мониторинга: сбор метрик по HTTP (scrape), хранение во временных рядах, запросы PromQL, алертинг. |
+| **kube-state-metrics** | Сервис, экспортирующий состояние объектов Kubernetes (поды, деплойменты, ноды и т.д.) в формате метрик Prometheus. |
+| **Node Exporter** | Экспортер метрик ноды (CPU, память, диск, сеть) в формате Prometheus; обычно запускается как DaemonSet. |
+| **ServiceMonitor** | CRD Prometheus Operator: указывает Prometheus, какой Service скрейпить и по какому пути/порту для сбора метрик. |
+| **PrometheusRule** | CRD Prometheus Operator: группы правил алертинга и записи; при срабатывании условия генерируется алерт. |
+| **Alertmanager** | Компонент Prometheus: получает алерты, группирует, дедуплицирует и отправляет в каналы (Slack, PagerDuty, email). |
+| **SLI (Service Level Indicator)** | Метрика качества сервиса (доля успешных запросов, latency p99 и т.д.). |
+| **SLO (Service Level Objective)** | Целевое значение SLI (например, 99.9% доступности); основа для алертов и error budget. |
+| **SLA (Service Level Agreement)** | Договор с пользователями с последствиями при нарушении; алерты настраивают так, чтобы реагировать до нарушения SLO. |
+| **Трейсинг (distributed tracing)** | Отслеживание пути запроса через несколько сервисов (spans, trace ID); инструменты: Jaeger, Tempo, OpenTelemetry. |
+| **OpenTelemetry** | Стандарт и инструменты для сбора телеметрии (метрики, логи, трейсы) и экспорта в бэкенды. |
 
 ---
 

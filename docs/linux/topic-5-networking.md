@@ -1,6 +1,7 @@
 # 5. Сеть в Linux (DevOps core)
 
-**Цель:** понимать, что реально происходит в сети на хосте: стек TCP/IP в Linux, iproute2 (ip, ss), ARP и таблица маршрутизации, NAT и conntrack, разрешение DNS (/etc/resolv.conf, nsswitch.conf), концепции iptables/nftables. Уметь диагностировать «сервис доступен локально, но не извне», найти проблему с DNS и понять разницу между ss и netstat.
+---
+TCP/IP стек в Linux, iproute2 (ip/ss), ARP/маршрутизация, NAT/conntrack, DNS (resolv.conf, nsswitch.conf), iptables/nftables и практическая диагностика сетевых проблем.
 
 ---
 

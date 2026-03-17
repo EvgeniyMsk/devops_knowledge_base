@@ -1,6 +1,7 @@
 # 7. Load Balancing и Proxy
 
-**Цель:** понимать архитектуру высоконагруженных систем: разницу между балансировкой на L4 и L7, алгоритмы (round-robin, least connections), health checks; типы прокси (reverse, forward, transparent). Знать типичные решения: Nginx, HAProxy, Envoy.
+---
+L4 vs L7 балансировка, алгоритмы (round-robin, least connections), health checks и типы прокси (reverse/forward/transparent) + типичные решения (Nginx, HAProxy, Envoy).
 
 ---
 

@@ -1,5 +1,7 @@
 # Kubernetes
 ![Kubernetes[200]](./images/welcome.webp)
+
+**Kubernetes (K8s)** — оркестратор контейнеров: автоматизирует развёртывание, масштабирование и управление приложениями в контейнерах. Кластер состоит из **Control Plane** (API, etcd, scheduler, контроллеры) и **нод** (kubelet, kube-proxy, container runtime); приложения описываются объектами API (Pod, Service, Deployment и т.д.) и поддерживаются контроллерами в желаемом состоянии.
 ## Разделы
 
 - [**1. База: Linux, сеть и контейнеры**](topic-1-basis.md) — почему Kubernetes работает именно так: namespaces и cgroups, iptables/nftables, TCP/IP, DNS, NAT, балансировка L4/L7, TLS/mTLS; образы (слои, ENTRYPOINT/CMD, multi-stage, безопасность), OCI runtime (containerd, runc). Закрытие пробелов перед углублением в K8s.
@@ -26,4 +28,4 @@
 
 ## Другое
 
-- [Helm](helm.md) — пакетный менеджер для Kubernetes.
+- [Helm](../helm/helm.md) — пакетный менеджер для Kubernetes.

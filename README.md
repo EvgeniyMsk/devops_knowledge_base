@@ -8,13 +8,12 @@
 - **Linux** — материалы по Linux  
 - **IaC** — Ansible, Terraform  
 - **Docker** — базис, архитектура, образы, контейнеры, сеть, тома, Compose, безопасность, registry, CI/CD, production, отладка, Kubernetes, справочник CLI  
-- **Kubernetes** — Kubernetes, Helm  
+- **Kubernetes (K8s)** — Kubernetes (плюс Helm)  
 - **CI/CD** — Jenkins, GitLab  
-- **GitOps** — ArgoCD  
+- **GitOps** — Argo CD, Flux  
 - **База данных** — PostgreSQL, MySQL, MongoDB, Redis  
 - **Брокеры сообщений** — RabbitMQ, Kafka, Nats  
 
----
 ## Обратная связь
 Предложения и правки: [GitHub](https://github.com/EvgeniyMsk) или Telegram: [@logvinov_evgeniy](https://t.me/logvinov_evgeniy).
 ---

@@ -1,6 +1,7 @@
 # 9. Observability и отладка сети
 
-**Цель:** быстро находить root cause сетевых проблем: знать набор инструментов (tcpdump, Wireshark, mtr, curl, iperf) и системный подход — проверка DNS, маршрутизации, firewall и L7 по шагам.
+---
+Инструменты (tcpdump, Wireshark, mtr, curl, iperf) и системный подход к root cause: DNS → маршрутизация → firewall → L7.
 
 ---
 

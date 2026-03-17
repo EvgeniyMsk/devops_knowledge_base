@@ -1,6 +1,7 @@
 # 3. Пользователи, права и безопасность
 
-**Цель:** понимать модель безопасности Linux: UID/GID, классические права и биты setuid/setgid/sticky, ACL, sudo (NOPASSWD, secure_path), PAM на уровне понимания, базовые концепции SELinux и AppArmor. Уметь настроить доступ к каталогу через ACL и разобрать «permission denied» без chmod 777.
+---
+UID/GID, права (setuid/setgid/sticky), ACL, sudo, основы PAM/SELinux/AppArmor и практическая диагностика «permission denied» без chmod 777.
 
 ---
 

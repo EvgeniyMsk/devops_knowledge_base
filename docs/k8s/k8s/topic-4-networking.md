@@ -1,6 +1,28 @@
 # 4. Сеть в Kubernetes
 
-**Цель:** уверенно настраивать и отлаживать сеть в кластере: Pod-to-Pod, типы Service и kube-proxy (iptables/ipvs), DNS (CoreDNS), Ingress и TLS (Cert-Manager), Ingress Controllers (NGINX, Traefik), обзор Gateway API, CNI (Calico, Cilium, Flannel). Практика: Ingress + TLS, проверка доступности сервисов из пода. В разделе — примеры манифестов с комментариями и best practices для production.
+---
+Pod-to-Pod, Service и kube-proxy (iptables/ipvs), DNS (CoreDNS), Ingress и TLS (Cert-Manager), Ingress Controllers, Gateway API, CNI (Calico/Cilium/Flannel), Service Mesh (Istio, Linkerd: mTLS, маршрутизация, observability) + практика Ingress/TLS. Примеры манифестов с комментариями и best practices для production.
+
+---
+
+## Термины и сущности сети
+
+| Термин | Определение |
+|--------|-------------|
+| **Pod-to-Pod** | Прямая сетевая связь между подами по их IP из подсети CNI; нестабильна при пересоздании пода, для стабильного доступа используют Service. |
+| **ClusterIP** | Тип Service: виртуальный IP внутри кластера; трафик к ClusterIP:port перенаправляется kube-proxy на один из эндпоинтов (под). |
+| **NodePort** | Тип Service: порт в диапазоне 30000–32767 на каждой ноде; трафик с узла идёт в ClusterIP и далее в под. |
+| **LoadBalancer** | Тип Service: облачный контроллер создаёт внешний балансировщик и выдаёт внешний IP; обычно расширение NodePort. |
+| **Headless Service** | Service с `clusterIP: None`; DNS возвращает список IP подов (для StatefulSet и прямого доступа к подам). |
+| **kube-proxy** | Компонент на каждой ноде: поддерживает правила iptables/ipvs для Service (ClusterIP, NodePort); L4, не L7. |
+| **CoreDNS** | Стандартный DNS-сервер в кластере; резолвит имена сервисов и подов (*.svc.cluster.local, *.pod.cluster.local). |
+| **CNI (Container Network Interface)** | Плагин, настраивающий сеть для подов: выделение IP, маршруты, overlay; без CNI поды не получают IP. |
+| **Ingress** | Объект API для L7-маршрутизации: по Host и path трафик направляется на нужный Service; обрабатывается Ingress Controller. |
+| **Ingress Controller** | Компонент (NGINX, Traefik и др.), который читает объекты Ingress и настраивает прокси/балансировщик; без него Ingress не работает. |
+| **Cert-Manager** | Контроллер в кластере: выдаёт и продлевает TLS-сертификаты (например, Let's Encrypt), хранит их в Secret. |
+| **Gateway API** | Современный API для L4/L7: разделение Gateway (точка входа) и HTTPRoute/TCPRoute (маршруты); замена/развитие Ingress. |
+| **NetworkPolicy** | Объект API: правила входящего и исходящего трафика для подов (L3/L4); реализуется CNI-плагином (Calico, Cilium и др.). |
+| **Service Mesh** | Слой управления трафиком между сервисами: sidecar-прокси на каждом поде, mTLS, маршрутизация, observability; примеры: Istio, Linkerd. |
 
 ---
 
@@ -464,7 +486,400 @@ kubectl describe httproute app-route
 - **Cilium** — на базе eBPF: маршрутизация и политики в ядре, observability (Hubble). Сильная сторона — безопасность и видимость трафика, L7-политики для HTTP.
 - **Flannel** — простой overlay (VXLAN или host-gw). NetworkPolicy не встроены (реализуются через другой компонент). Удобен для быстрого старта и простых топологий.
 
-Подробнее — в [Networking: 8. Kubernetes Networking](../networking/topic-8-kubernetes-networking.md). В production выбор CNI влияет на NetworkPolicy, метрики и отладку сети.
+Подробнее — в [Networking: 8. Kubernetes Networking](../../networking/topic-8-kubernetes-networking.md). В production выбор CNI влияет на NetworkPolicy, метрики и отладку сети.
+
+---
+
+## NetworkPolicy: сегментация трафика внутри кластера
+
+**NetworkPolicy** — объект Kubernetes, который описывает, какой входящий и исходящий трафик разрешён для подов (L3/L4: IP/порт/протокол). Работает только если CNI-плагин поддерживает политики (Calico, Cilium и др.). Без NetworkPolicy поды в namespace, как правило, могут общаться со всеми подами/сервисами во всех namespace.
+
+Ключевые идеи:
+
+- Политика действует **на выбранные поды** (selector), а не на весь кластер.
+- Правила делятся на **ingress** (входящий трафик) и **egress** (исходящий).
+- Модель «deny by default» достигается тем, что при наличии хотя бы одной политики для пода **весь неописанный трафик запрещается**.
+- Политики **аддитивны** — если несколько NetworkPolicy матчатся на один под, разрешения суммируются.
+
+### Базовый пример: запрет всего входящего кроме namespace
+
+Разрешим входящий трафик к подам `app=backend` только из подов в том же namespace с меткой `app=frontend`. Всё остальное входящее будет запрещено.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+      ports:
+        - protocol: TCP
+          port: 8080
+```
+
+- **podSelector** — какие поды защищаем (здесь все `app=backend` в namespace `prod`).
+- **policyTypes: [Ingress]** — управляем только входящим трафиком.
+- **ingress[].from[].podSelector** — кто может подключаться (подов `app=frontend` из того же namespace).
+- **ports** — на какие порты разрешён трафик (8080/TCP).
+
+После применения: к `backend` никто, кроме `frontend` в `prod`, войти не сможет (при условии, что CNI поддерживает NetworkPolicy).
+
+### Разрешить только нужные egress-направления
+
+Ограничим исходящий трафик подов с меткой `role=app` только на базу данных и DNS.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: app-egress-db-dns
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      role: app
+  policyTypes:
+    - Egress
+  egress:
+    # Разрешить доступ к БД
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: prod-db
+          podSelector:
+            matchLabels:
+              app: postgres
+      ports:
+        - protocol: TCP
+          port: 5432
+    # Разрешить доступ к DNS (CoreDNS)
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kube-system: "true"
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+```
+
+- **policyTypes: [Egress]** — управляем только исходящим трафиком.
+- Первая запись в **egress** позволяет ходить в namespace `prod-db` к подам `app=postgres` на порт 5432/TCP.
+- Вторая — разрешает DNS-запросы к CoreDNS (порт 53/UDP в namespace `kube-system`).
+- Любой другой исходящий трафик от подов `role=app` будет запрещён.
+
+### Политика «deny all» для namespace
+
+Частый production-подход — сделать namespace «закрытым по умолчанию» и добавлять точечные allow-политики.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: prod
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+```
+
+- **podSelector: {}** — все поды в namespace.
+- **Ingress + Egress** — запрещаем весь входящий и исходящий трафик по умолчанию.
+- После этого нужно добавить отдельные NetworkPolicy с ingress/egress-правилами для конкретных ролей (`frontend`, `backend`, `db` и т.д.).
+
+### Разрешить трафик из других namespace по меткам
+
+Иногда нужно разрешить доступ из инфраструктурных namespace (например, мониторинг).
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-monitoring
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+      ports:
+        - protocol: TCP
+          port: 9100
+```
+
+- **namespaceSelector** — выбираем namespace по меткам (здесь `name=monitoring`).
+- Разрешаем входящий трафик на порт 9100/TCP (обычный порт для метрик) только из namespace мониторинга.
+
+### Отладка и проверка NetworkPolicy
+
+Полезные команды:
+
+```bash
+kubectl get networkpolicy -A
+kubectl describe networkpolicy -n prod default-deny-all
+```
+
+Лучший способ проверки — запуск тестового пода без ограничений и попытка подключиться:
+
+```bash
+kubectl run -n prod netshoot --image=nicolaka/netshoot -it --rm -- bash
+# Внутри:
+curl -v http://backend:8080/health
+nc -vz postgres.prod-db.svc.cluster.local 5432
+```
+
+Если доступ неожиданно закрыт или открыт — пересмотреть правила и пересобрать политики (особенно важно помнить, что политики аддитивны).
+
+### Best practices для NetworkPolicy
+
+- **Deny by default для критичных namespace**: `default-deny-all` или хотя бы `default-deny-ingress`, затем точечные allow-политики.
+- **Использовать метки, а не IP**: селекторы по labels (`app`, `role`, `tier`) вместо IP/CIDR — проще сопровождать при масштабировании.
+- **Разделять ingress и egress**: чётко понимать, кто может приходить к сервису, и куда сервис имеет право ходить.
+- **Документировать групповыми политиками**: хранить политики вместе с манифестами приложения (GitOps), разбивать по ролям (`frontend`, `backend`, `db`).
+- **Тестировать на staging**: сначала включать строгие политики в non-prod кластере, проверять сценарии миграции/обновлений.
+- **Не забывать про DNS и внешние интеграции**: явно разрешать egress к DNS, шлюзам платежей, внешним API и т.п.
+
+---
+
+## Service Mesh
+
+**Service Mesh** — слой управления трафиком между сервисами (service-to-service) внутри кластера. Трафик перехватывается **sidecar-прокси** (прокси-контейнер рядом с каждым подом приложения); **control plane** выдаёт конфигурацию прокси и собирает телеметрию. Приложение не меняет код: шифрование (mTLS), retry, таймауты, метрики и маршрутизация (canary, A/B) настраиваются через CRD или API mesh’а.
+
+Зачем нужен Service Mesh:
+
+- **mTLS (mutual TLS)** — шифрование и взаимная аутентификация между подами без изменений в коде приложения.
+- **Observability** — метрики, трейсы и логи на уровне запросов между сервисами (latency, error rate, topology).
+- **Traffic management** — canary, A/B, weighted routing, retry/timeout без выноса логики в Ingress или код.
+- **Resilience** — circuit breaker, outlier detection (исключение «плохих» эндпоинтов из балансировки).
+
+Основные реализации в экосистеме Kubernetes: **Istio** (Envoy sidecar, богатый набор CRD, интеграция с экосистемой), **Linkerd** (лёгкий Rust-прокси, простота установки и эксплуатации), **Cilium Service Mesh** (на базе eBPF, без sidecar). Ниже — концепции и примеры на Istio; принципы применимы и к другим mesh’ам.
+
+### Концепции: Data Plane и Control Plane
+
+- **Data plane** — набор sidecar-прокси (в Istio — Envoy). Каждый под приложения получает дополнительный контейнер (inject); исходящий и входящий трафик пода идёт через этот прокси. Прокси получает конфигурацию от control plane и отдаёт метрики/трейсы.
+- **Control plane** — компоненты mesh’а (в Istio: istiod). Выдаёт конфигурацию прокси (например, куда слать трафик, какие retry/таймауты), управляет сертификатами для mTLS, агрегирует телеметрию. В кластере обычно один control plane (с репликой для HA).
+
+Включение в mesh: помечают namespace меткой (например, `istio-injection=enabled`) или аннотацией у пода; при создании пода **injector** добавляет sidecar-контейнер. Трафик между подами в mesh идёт через sidecar и может автоматически шифроваться (mTLS).
+
+### Istio: установка и включение sidecar
+
+Установка Istio (кратко): через `istioctl install` или Helm; выбирается профиль (default, demo, minimal и т.д.). Включение инъекции sidecar для namespace:
+
+```yaml
+# Включить автоматическую инъекцию sidecar для namespace.
+# Поды, создаваемые в этом namespace, получат контейнер istio-proxy (Envoy).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app
+  labels:
+    istio-injection: enabled
+```
+
+Проверка: после создания пода в `app` у пода должно быть два контейнера (приложение + istio-proxy). Запросы из пода к другому сервису в mesh идут через sidecar и учитываются в метриках Istio.
+
+### VirtualService и DestinationRule: маршрутизация и политики подбора
+
+**VirtualService** задаёт правила маршрутизации к сервису (по заголовкам, URI, весам). **DestinationRule** описывает подмножества (subsets) бэкенда и политики (load balancing, connection pool, outlier detection).
+
+Пример: canary по весам и подмножествам по версии.
+
+```yaml
+# DestinationRule: определяем подмножества (v1, v2) по метке версии.
+# Политики: round-robin, outlier detection — выкидывать эндпоинт из балансировки при ошибках.
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: reviews-dr
+  namespace: default
+spec:
+  host: reviews
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+    outlierDetection:
+      consecutive5xxErrors: 5
+      interval: 30s
+      baseEjectionTime: 30s
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+    - name: v2
+      labels:
+        version: v2
+---
+# VirtualService: 90% трафика на v1, 10% на v2 (canary).
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: reviews-vs
+  namespace: default
+spec:
+  hosts:
+    - reviews
+  http:
+    - match:
+        - headers:
+            end-user:
+              exact: internal
+      route:
+        - destination:
+            host: reviews
+            subset: v2
+        weight: 100
+    - route:
+        - destination:
+            host: reviews
+            subset: v1
+        weight: 90
+        - destination:
+            host: reviews
+            subset: v2
+        weight: 10
+```
+
+- **DestinationRule.host** — имя сервиса Kubernetes (reviews). **subsets** — выбор подов по labels; **trafficPolicy** применяется ко всему трафику к этому host (можно переопределять в subset).
+- **VirtualService.hosts** — тот же сервис. **http[].match** — условия (headers, uri, method); **route** — куда вести трафик и с каким weight. Здесь: для заголовка `end-user: internal` — весь трафик на v2; иначе — 90% v1, 10% v2.
+
+### Retry и timeout в VirtualService
+
+Устойчивость к временным сбоям и ограничение времени ожидания задаются в том же **http** rule:
+
+```yaml
+# Retry при 5xx и timeout 3s для вызовов к ratings.
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ratings-vs
+  namespace: default
+spec:
+  hosts:
+    - ratings
+  http:
+    - route:
+        - destination:
+            host: ratings
+      timeout: 3s
+      retries:
+        attempts: 3
+        perTryTimeout: 1s
+        retryOn: 5xx,reset,connect-failure
+```
+
+- **timeout** — общий таймаут запроса со стороны вызывающего.
+- **retries.attempts** — число попыток; **perTryTimeout** — таймаут одной попытки; **retryOn** — при каких условиях повторять (5xx, сброс соединения и т.д.). В production не увеличивать attempts без ограничения, чтобы не усугублять нагрузку на сломанный бэкенд.
+
+### mTLS: PeerAuthentication
+
+Включение взаимной TLS между подами в mesh — через **PeerAuthentication**. По умолчанию Istio может работать в режиме PERMISSIVE (принимает и plaintext, и mTLS); для строгого шифрования между namespace задают STRICT.
+
+```yaml
+# Включить строгий mTLS для всего namespace default:
+# только зашифрованные соединения между подами.
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default-mtls
+  namespace: default
+spec:
+  mtls:
+    mode: STRICT
+---
+# Глобальная политика для всего mesh (обычно в namespace istio-system).
+# apiVersion: security.istio.io/v1beta1
+# kind: PeerAuthentication
+# metadata:
+#   name: default
+#   namespace: istio-system
+# spec:
+#   mtls:
+#     mode: STRICT
+```
+
+- **STRICT** — sidecar принимает только mTLS; исходящие вызовы из этого namespace тоже идут по mTLS (если целевой сервис в mesh).
+- **PERMISSIVE** — принимаются и mTLS, и plaintext (удобно при постепенном включении mesh).
+- **DISABLE** — mTLS отключён для этого scope (namespace/workload). Использовать точечно, например для legacy-подов без sidecar.
+
+Сертификаты для mTLS в Istio по умолчанию выдаёт control plane (istiod); продление автоматическое. В production при необходимости можно перейти на собственный CA (custom CA в конфиге Istio).
+
+### AuthorizationPolicy: кто может вызывать сервис
+
+Разрешить или запретить вызовы по принципу «кто звонит» (identity из mTLS или из атрибутов запроса):
+
+```yaml
+# Разрешить вызовы к reviews только от сервиса productpage (на основе mTLS identity).
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: reviews-allow-productpage
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: reviews
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals: ["cluster.local/ns/default/sa/productpage"]
+```
+
+- **selector** — к каким подам применяется политика (здесь — с label app=reviews).
+- **action: ALLOW** — разрешаются только запросы, подходящие под **rules**; остальные по умолчанию запрещены (если включён authorization). **principals** — identity сервисного аккаунта вызывающего (формат Istio: cluster/ns/namespace/sa/serviceaccount).
+
+Можно комбинировать **from** (source) и **to** (method, path) для детальных правил. В production начинать с явного ALLOW для нужных источников и не открывать «все» без необходимости.
+
+### Пример: Linkerd (кратко)
+
+Linkerd использует свой лёгкий прокси (Rust), без Envoy. Концепции похожи: инъекция sidecar, mTLS из коробки, метрики (golden metrics: latency, success rate, throughput). Маршрутизация по весам и retry настраиваются через **ServiceProfile** (CRD Linkerd). Установка: `linkerd inject` для манифестов или аннотация namespace. Плюсы — низкое потребление ресурсов и простая установка; минусы — меньше возможностей по сравнению с Istio (например, по сложной маршрутизации по заголовкам).
+
+### Best practices для Service Mesh в production
+
+| Практика | Описание |
+|----------|----------|
+| **Включать mesh по namespace** | Включать инъекцию по одному namespace/приложению, проверять метрики и mTLS, затем расширять. |
+| **Задавать лимиты для sidecar** | У sidecar (istio-proxy) задавать requests/limits CPU и memory, чтобы не конкурировать с приложением при нехватке ресурсов. |
+| **Retry с осторожностью** | Ограничивать attempts и использовать retryOn (например, только 5xx), чтобы не усиливать каскадные сбои. |
+| **DestinationRule с outlier detection** | Включать outlier detection для автоматического исключения «падающих» эндпоинтов из балансировки. |
+| **mTLS по умолчанию STRICT** | После выката mesh переходить на STRICT в нужных namespace; оставлять PERMISSIVE только для миграции. |
+| **Мониторинг control plane** | Следить за состоянием istiod/linkerd control plane и за количеством сбоев конфигурации (например, в Prometheus). |
+| **Не мешать readiness** | Убедиться, что readiness probe приложения не идёт через sidecar туда, где это меняет результат; при необходимости проверять приложение напрямую. |
+
+### Паттерны и антипаттерны (Service Mesh)
+
+| Паттерн | Описание |
+|--------|----------|
+| **Canary через VirtualService** | Выкат новой версии как отдельный subset; дать 5–10% трафика, смотреть метрики, затем увеличивать weight. |
+| **Один DestinationRule на сервис** | Хранить subsets и outlier detection в одном DR; ссылаться на subsets из нескольких VirtualService при необходимости. |
+| **AuthorizationPolicy по принципу least privilege** | Явно разрешать только нужных вызывающих (по principal); не полагаться на «все разрешено». |
+
+| Антипаттерн | Почему плохо | Что делать |
+|-------------|--------------|------------|
+| **Включать mesh сразу на весь кластер** | Сбои инъекции или control plane затронут все приложения. | Включать по namespace/приложению, проверять стабильность. |
+| **Без лимитов у sidecar** | При нехватке памяти/CPU sidecar может «задавить» приложение. | Задавать requests/limits для контейнера istio-proxy/linkerd-proxy. |
+| **Бесконечные retry** | Увеличивает нагрузку на сломанный бэкенд и задержки для пользователя. | Ограничивать attempts (2–3), задавать perTryTimeout и retryOn. |
+| **Игнорировать телеметрию mesh** | Теряется смысл mesh — видимость и управление трафиком. | Интегрировать метрики Istio/Linkerd с Prometheus/Grafana и настроить алерты. |
 
 ---
 
@@ -526,6 +941,7 @@ kubectl exec -it <pod> -- curl -v -H "Host: app.example.com" http://ingress-cont
 | **Rate limit и таймауты** | Задавать на Ingress для защиты и предсказуемого поведения. |
 | **Проверять с пода** | Доступность Service и Ingress с точки зрения приложения. |
 | **Gateway API: разделение Gateway и HTTPRoute** | Оператор владеет точкой входа; приложения создают только маршруты в своих namespace. |
+| **Service Mesh: canary и mTLS** | Маршрутизация по весам и шифрование между подами без изменений в коде приложения. |
 
 | Антипаттерн | Почему плохо | Что делать |
 |-------------|--------------|------------|
@@ -542,5 +958,7 @@ kubectl exec -it <pod> -- curl -v -H "Host: app.example.com" http://ingress-cont
 - [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/)
 - [Cert-Manager](https://cert-manager.io/docs/)
 - [Gateway API](https://gateway-api.sigs.k8s.io/) — обзор, концепции, [HTTPRoute](https://gateway-api.sigs.k8s.io/api-types/httproute/), [Gateway](https://gateway-api.sigs.k8s.io/api-types/gateway/)
-- [Networking: 8. Kubernetes Networking](../networking/topic-8-kubernetes-networking.md)
+- [Istio](https://istio.io/latest/docs/) — документация, [Traffic Management](https://istio.io/latest/docs/concepts/traffic-management/), [Security](https://istio.io/latest/docs/concepts/security/)
+- [Linkerd](https://linkerd.io/docs/) — документация, [Getting Started](https://linkerd.io/docs/getting-started/)
+- [Networking: 8. Kubernetes Networking](../../networking/topic-8-kubernetes-networking.md)
 - [Traefik Ingress](https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/)

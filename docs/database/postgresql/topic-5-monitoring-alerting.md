@@ -1,6 +1,7 @@
 # 5. Мониторинг и алертинг PostgreSQL
 
-**Цель:** настроить мониторинг ключевых метрик (подключения, replication lag, vacuum, диск, WAL, блокировки и deadlock) и алерты без лишнего шума. Инструменты: postgres_exporter + Prometheus, Grafana, системные представления (pg_stat_activity, pg_locks). В разделе — примеры запросов и правил алертов с комментариями и best practices для production.
+---
+Мониторинг ключевых метрик (подключения, replication lag, vacuum, диск, WAL, блокировки и deadlock) и алерты без лишнего шума. Инструменты: postgres_exporter + Prometheus, Grafana, системные представления (pg_stat_activity, pg_locks). В разделе — примеры запросов и правил алертов с комментариями и best practices для production.
 
 ---
 

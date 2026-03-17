@@ -1,6 +1,7 @@
 # 1. База PostgreSQL: архитектура, конфигурация и безопасность
 
-**Цель:** уверенно понимать, как устроен PostgreSQL: процессная модель, shared buffers, WAL, MVCC, ключевые параметры конфигурации (postgresql.conf, pg_hba.conf), роли и привилегии. В разделе — примеры кода и SQL с комментариями и best practices для production.
+---
+Процессная модель, shared buffers, WAL, MVCC, ключевые параметры конфигурации (postgresql.conf, pg_hba.conf), роли и привилегии. В разделе — примеры кода и SQL с комментариями и best practices для production.
 
 ---
 

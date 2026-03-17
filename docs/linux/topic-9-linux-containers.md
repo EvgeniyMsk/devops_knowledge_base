@@ -1,6 +1,7 @@
 # 9. Linux и контейнеры
 
-**Цель:** понимать, что Docker и другие контейнеры — это механизмы ядра Linux: namespaces, cgroups, overlayfs, capabilities. Различать chroot и полноценный контейнер. Уметь посмотреть namespaces контейнера и ограничить ресурсы контейнера, сравнив с bare metal.
+---
+namespaces, cgroups, overlayfs и capabilities: как устроены контейнеры в Linux, чем отличаются от chroot, и как смотреть namespaces/лимиты ресурсов.
 
 ---
 

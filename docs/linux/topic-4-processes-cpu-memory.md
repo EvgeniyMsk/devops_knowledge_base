@@ -1,6 +1,7 @@
 # 4. Процессы, CPU, память
 
-**Цель:** диагностировать тормоза и падения в production: PID/PPID, переключение контекста, load average, OOM Killer, память (RSS, VSZ, page cache, swap), nice/renice и база cgroups. Уметь найти процесс, съедающий память, отличить высокий load от высокой загрузки CPU и ограничить CPU/память через cgroups.
+---
+PID/PPID, load average, OOM Killer, память (RSS/VSZ/page cache/swap), nice/renice и основы cgroups — для диагностики тормозов и падений в production.
 
 ---
 

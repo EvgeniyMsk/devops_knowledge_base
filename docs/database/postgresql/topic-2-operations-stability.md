@@ -1,6 +1,7 @@
 # 2. Эксплуатация и стабильность: VACUUM, WAL, Backup & Restore
 
-**Цель:** уверенно поддерживать стабильность PostgreSQL: VACUUM и Autovacuum (мёртвые строки, bloat, wraparound), WAL и checkpoints (fsync, влияние на I/O), резервное копирование и восстановление (pg_dump, pg_basebackup, PITR, инструменты pgBackRest и wal-g). В разделе — примеры кода и SQL с комментариями и best practices для production.
+---
+VACUUM и Autovacuum (мёртвые строки, bloat, wraparound), WAL и checkpoints (fsync, влияние на I/O), резервное копирование и восстановление (pg_dump, pg_basebackup, PITR, инструменты pgBackRest и wal-g). В разделе — примеры кода и SQL с комментариями и best practices для production.
 
 ---
 

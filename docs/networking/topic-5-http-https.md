@@ -1,6 +1,7 @@
 # 5. HTTP и HTTPS (L7)
 
-**Цель:** понимать, что происходит за Nginx, Envoy или ALB: методы и коды ответа HTTP, заголовки, Keep-Alive; TLS handshake, SNI, цепочка сертификатов, mTLS и ALPN. Уметь быстро проверять L7 через curl и openssl s_client.
+---
+Методы/коды HTTP, заголовки и Keep-Alive; TLS handshake, SNI, цепочка сертификатов, mTLS и ALPN + быстрая проверка L7 через curl и openssl s_client.
 
 ---
 

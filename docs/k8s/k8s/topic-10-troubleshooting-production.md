@@ -1,6 +1,22 @@
 # 10. Отладка и эксплуатация в production (Troubleshooting & Production)
 
-**Цель:** мыслить как SRE: быстро диагностировать типичные проблемы (Pending Pods, ImagePullBackOff, OOMKilled, блокировка NetworkPolicy, латентность etcd), использовать инструменты (kubectl debug, stern, k9s, kubectl top, tcpdump в поде) и отрабатывать сценарии (падение ноды, недоступность API server, массовый рестарт подов). В разделе — примеры манифестов с комментариями и best practices для production.
+---
+Типичные проблемы (Pending Pods, ImagePullBackOff, OOMKilled, NetworkPolicy, latency etcd), инструменты (kubectl debug, stern, k9s, kubectl top, tcpdump) и сценарии (падение ноды, недоступность API server, массовый рестарт). Примеры и best practices для production.
+
+---
+
+## Термины и сущности
+
+| Термин | Определение |
+|--------|-------------|
+| **Pending (под)** | Фаза пода: принят API, но ещё не запланирован на ноду или не запущены контейнеры; при застревании — смотреть Events (ресурсы, nodeSelector, taints, PVC). |
+| **ImagePullBackOff / ErrImagePull** | Состояние контейнера: образ не удаётся скачать (неверное имя/тег, нет доступа к registry, сеть); kubelet повторяет pull с backoff. |
+| **OOMKilled** | Причина завершения контейнера: потребление памяти превысило limit; ядро (OOM killer) завершило процесс. |
+| **CrashLoopBackOff** | Под постоянно перезапускается (контейнер падает); backoff — задержка между рестартами увеличивается. |
+| **Eviction** | Вытеснение пода с ноды при нехватке ресурсов (память, диск) или при drain ноды; порядок — по QoS и приоритету. |
+| **imagePullSecrets** | Ссылка на Secret с учётными данными для доступа к приватному container registry; kubelet использует при pull образа. |
+| **kubectl debug** | Возможность подключиться к поду для отладки: ephemeral container или копия пода с изменённым command; не требует перезапуска приложения. |
+| **Readiness / Liveness probe** | Проверки состояния контейнера: при неуспехе readiness под исключается из Service; при неуспехе liveness контейнер перезапускается. |
 
 ---
 

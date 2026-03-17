@@ -42,8 +42,18 @@ nav:
     - 9. Linux и контейнеры: linux/topic-9-linux-containers.md
     - 10. Troubleshooting: linux/topic-10-troubleshooting-mindset.md
   - IaC:
-    - Ansible: iac/ansible.md
-    - Terrarofm: iac/terraform.md
+    - Ansible:
+      - Обзор: iac/ansible/ansible.md
+      - 1. База (inventory, playbooks, variables): iac/ansible/topic-1-basis.md
+      - 2. Поддерживаемые playbooks: iac/ansible/topic-2-clean-playbooks.md
+      - 3. Архитектура проекта: iac/ansible/topic-3-project-architecture.md
+      - 4. Безопасность и секреты: iac/ansible/topic-4-security-secrets.md
+      - 5. Работа с инфраструктурой: iac/ansible/topic-5-infrastructure-operations.md
+      - 6. Продвинутые техники: iac/ansible/topic-6-advanced-techniques.md
+      - 7. CI/CD и интеграция: iac/ansible/topic-7-cicd-integration.md
+      - 8. Observability и Debugging: iac/ansible/topic-8-observability-debugging.md
+      - 9. Best Practices: iac/ansible/topic-9-best-practices.md
+    - Terrarofm: iac/terraform/terraform.md
   - Docker:
     - Обзор: docker/docker.md
     - 1. Базис: docker/topic-1-basis.md
@@ -61,24 +71,33 @@ nav:
     - 13. Docker и Kubernetes: docker/topic-13-kubernetes.md
     - 14. Справочник CLI: docker/topic-14-cli-reference.md
   - Kubernetes:
-    - Обзор: kubernetes/kubernetes.md
-    - 1. База (Linux, сеть, контейнеры): kubernetes/topic-1-basis.md
-    - 2. Архитектура: kubernetes/topic-2-architecture.md
-    - 3. Workloads и API: kubernetes/topic-3-workloads-api.md
-    - 4. Сеть в Kubernetes: kubernetes/topic-4-networking.md
-    - 5. Безопасность: kubernetes/topic-5-security.md
-    - 6. Хранилище: kubernetes/topic-6-storage.md
-    - 7. Наблюдаемость: kubernetes/topic-7-observability.md
-    - 8. Автомасштабирование и отказоустойчивость: kubernetes/topic-8-autoscaling-resilience.md
-    - 9. CI/CD и GitOps: kubernetes/topic-9-cicd-gitops.md
-    - 10. Отладка и эксплуатация: kubernetes/topic-10-troubleshooting-production.md
-    - 11. Архитектура и Best Practices: kubernetes/topic-11-architecture-best-practices.md
-    - Helm: kubernetes/helm.md
+    - K8s:
+      - Обзор: k8s/k8s/kubernetes.md
+      - 1. База (Linux, сеть, контейнеры): k8s/k8s/topic-1-basis.md
+      - 2. Архитектура: k8s/k8s/topic-2-architecture.md
+      - 3. Workloads и API: k8s/k8s/topic-3-workloads-api.md
+      - 4. Сеть в Kubernetes: k8s/k8s/topic-4-networking.md
+      - 5. Безопасность: k8s/k8s/topic-5-security.md
+      - 6. Хранилище: k8s/k8s/topic-6-storage.md
+      - 7. Наблюдаемость: k8s/k8s/topic-7-observability.md
+      - 8. Автомасштабирование и отказоустойчивость: k8s/k8s/topic-8-autoscaling-resilience.md
+      - 9. CI/CD и GitOps: k8s/k8s/topic-9-cicd-gitops.md
+      - 10. Отладка и эксплуатация: k8s/k8s/topic-10-troubleshooting-production.md
+      - 11. Архитектура и Best Practices: k8s/k8s/topic-11-architecture-best-practices.md
+    - Helm: k8s/helm/helm.md
   - CI/CD:
-    - Jenkins: ci-cd/jenkins.md
     - GitLab: ci-cd/gitlab.md
+    - Jenkins: ci-cd/jenkins.md
   - GitOps:
-    - ArgoCD: gitops/argocd.md
+    - ArgoCD: gitops/argocd/argocd.md
+    - Flux: gitops/flux/flux.md
+  - Observability:
+    - Prometheus: observability/prometheus/prometheus.md
+    - Grafana: observability/grafana/grafana.md
+    - Loki: observability/loki/loki.md
+    - Jaeger: observability/jaeger/jaeger.md
+    - OpenTelemetry: observability/opentelemetry/opentelemetry.md
+    - OpenMetrics: observability/openmetrics/openmetrics.md
   - База данных: 
     - PostgreSQL:
       - Обзор: database/postgresql.md

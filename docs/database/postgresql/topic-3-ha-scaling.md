@@ -1,6 +1,7 @@
 # 3. High Availability и масштабирование: репликация, failover, connection pooling
 
-**Цель:** понимать и настраивать отказоустойчивость и масштабирование PostgreSQL: streaming replication (синхронная и асинхронная), replication slots, lag; инструменты failover (Patroni, repmgr, облачные решения); connection pooling (PgBouncer, Pgpool) и устранение «too many connections». В разделе — примеры кода и конфигурации с комментариями и best practices для production.
+---
+Streaming replication (синхронная и асинхронная), replication slots, lag; инструменты failover (Patroni, repmgr, облачные решения); connection pooling (PgBouncer, Pgpool) и устранение «too many connections». В разделе — примеры кода и конфигурации с комментариями и best practices для production.
 
 ---
 

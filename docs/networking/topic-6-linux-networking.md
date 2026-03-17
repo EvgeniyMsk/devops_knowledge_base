@@ -1,6 +1,7 @@
 # 6. Linux Networking
 
-**Цель:** уметь отлаживать сеть на хосте: понимать сетевой стек (NIC, ядро, сокеты), пользоваться инструментами (iproute2, ss, tcpdump, conntrack, ethtool) и разбираться в firewall (iptables/nftables, цепочки, stateful vs stateless). Понимать, как пакет проходит INPUT/FORWARD/OUTPUT и почему порт может быть открыт, но соединения нет.
+---
+Сетевой стек (NIC/ядро/сокеты), инструменты (iproute2, ss, tcpdump, conntrack, ethtool) и firewall (iptables/nftables) + как пакет проходит INPUT/FORWARD/OUTPUT и почему «порт открыт», но соединения нет.
 
 ---
 

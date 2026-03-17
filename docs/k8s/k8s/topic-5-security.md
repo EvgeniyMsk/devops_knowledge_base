@@ -1,8 +1,23 @@
 # 5. Безопасность в Kubernetes
 
-**Цель:** настраивать безопасность на уровне кластера и приложений: RBAC (Role, ClusterRole, RoleBinding, ServiceAccount), Pod Security (Pod Security Standards, SecurityContext), сетевая изоляция (NetworkPolicies, Zero Trust), работа с секретами (Kubernetes Secrets, External Secrets, Vault). В разделе — примеры манифестов с комментариями и best practices для production.
-
 Базовые объекты RBAC и Secret описаны в [3. Workloads и API-объекты](topic-3-workloads-api.md); здесь акцент на паттернах безопасности и ограничении доступа.
+
+---
+
+## Термины и сущности
+
+| Термин | Определение |
+|--------|-------------|
+| **RBAC (Role-Based Access Control)** | Авторизация в Kubernetes по ролям: что разрешено делать с какими ресурсами (apiGroups, resources, verbs). |
+| **Role** | Набор правил доступа в рамках одного namespace; задаёт разрешённые операции над объектами (get, list, create, delete и т.д.). |
+| **ClusterRole** | То же, что Role, но действует на весь кластер или на кластерные ресурсы (nodes, namespaces, PV). |
+| **RoleBinding** | Привязка Role или ClusterRole к субъекту (User, Group, ServiceAccount) в рамках одного namespace. |
+| **ClusterRoleBinding** | Привязка ClusterRole к субъекту на весь кластер; даёт права во всех namespace. |
+| **ServiceAccount** | Идентификатор для подов; токен SA используется при обращении пода к API Kubernetes; права задаются через RoleBinding/ClusterRoleBinding. |
+| **SecurityContext** | Настройки безопасности контейнера или пода: runAsUser, runAsNonRoot, readOnlyRootFilesystem, capabilities, seccomp и т.д. |
+| **Pod Security Standards (PSS)** | Встроенные политики уровня безопасности подов (privileged, baseline, restricted); задаются через labels namespace или admission. |
+| **NetworkPolicy** | Правила входящего (ingress) и исходящего (egress) трафика для подов; модель «deny by default» при наличии политики. |
+| **Zero Trust** | Подход «не доверять по умолчанию»: явные разрешения доступа (RBAC, NetworkPolicy, mTLS), минимум привилегий. |
 
 ---
 
