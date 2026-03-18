@@ -86,8 +86,8 @@ nav:
       - 11. Архитектура и Best Practices: k8s/k8s/topic-11-architecture-best-practices.md
     - Helm: k8s/helm/helm.md
   - CI/CD:
-    - GitLab: ci-cd/gitlab.md
-    - Jenkins: ci-cd/jenkins.md
+    - GitLab: ci-cd/gitlab/gitlab.md
+    - Jenkins: ci-cd/jenkins/jenkins.md
   - GitOps:
     - ArgoCD: gitops/argocd/argocd.md
     - Flux: gitops/flux/flux.md
@@ -111,9 +111,20 @@ nav:
     - MongoDB: database/mongodb.md
     - Redis: database/redis.md
   - Брокеры сообщений:
-    - RabbitMQ: message-broker/rabbitmq.md
-    - Kafka: message-broker/kafka.md
-    - Nats: message-broker/nats.md
+    - RabbitMQ:
+      - Обзор: message-broker/rabbitmq/rabbitmq.md
+      - 1. База: message-broker/rabbitmq/topic-1-basis.md
+      - 2. Надёжность и delivery-паттерны: message-broker/rabbitmq/topic-2-reliability-patterns.md
+      - 3. Паттерны применения и архитектура: message-broker/rabbitmq/topic-3-architecture-patterns.md
+      - 4. Кластеры и High Availability: message-broker/rabbitmq/topic-4-cluster-ha.md
+      - 5. Kubernetes и Production: message-broker/rabbitmq/topic-5-kubernetes-production.md
+      - 6. Мониторинг и алертинг: message-broker/rabbitmq/topic-6-monitoring-alerting.md
+      - 7. Performance и тюнинг: message-broker/rabbitmq/topic-7-performance-tuning.md
+      - 8. Troubleshooting: message-broker/rabbitmq/topic-8-troubleshooting.md
+      - 9. Security: message-broker/rabbitmq/topic-9-security.md
+      - 10. Сравнение и контекст: message-broker/rabbitmq/topic-10-comparison-context.md
+    - Kafka: message-broker/kafka/kafka.md
+    - Nats: message-broker/nats/nats.md
   - Обратная связь: contact/contact.md
 
 theme:
