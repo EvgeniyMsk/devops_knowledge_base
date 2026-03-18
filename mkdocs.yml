@@ -7,7 +7,7 @@ markdown_extensions:
   - pymdownx.superfences
 
 nav:
-  - На главную: index.md
+  - Главная: index.md
   - Networking:
     - Обзор: networking/networking.md
     - 1. Базовая теория сетей: networking/topic-1-basis.md
@@ -86,10 +86,33 @@ nav:
       - 11. Архитектура и Best Practices: k8s/k8s/topic-11-architecture-best-practices.md
     - Helm: k8s/helm/helm.md
   - CI/CD:
-    - GitLab: ci-cd/gitlab/gitlab.md
+    - GitLab:
+      - Обзор: ci-cd/gitlab/gitlab.md
+      - 1. База: ci-cd/gitlab/topic-1-basis.md
+      - 2. Продвинутая логика: ci-cd/gitlab/topic-2-advanced-logic.md
+      - 3. Архитектура платформы: ci-cd/gitlab/topic-3-platform-architecture.md
+      - 4. Deployment стратегии: ci-cd/gitlab/topic-4-deployment-strategies.md
+      - 5. Безопасность CI/CD: ci-cd/gitlab/topic-5-ci-security.md
+      - 6. Оптимизация и performance: ci-cd/gitlab/topic-6-optimization-performance.md
+      - 7. Интеграции: ci-cd/gitlab/topic-7-integrations.md
+      - 8. Observability и отладка: ci-cd/gitlab/topic-8-observability-debugging.md
+      - 9. Реальные кейсы: ci-cd/gitlab/topic-9-real-cases.md
     - Jenkins: ci-cd/jenkins/jenkins.md
   - GitOps:
-    - ArgoCD: gitops/argocd/argocd.md
+    - ArgoCD:
+      - Обзор: gitops/argocd/argocd.md
+      - 1. База: gitops/argocd/topic-1-basis.md
+      - 2. Архитектура: gitops/argocd/topic-2-architecture.md
+      - 3. Основные сущности: gitops/argocd/topic-3-main-entities.md
+      - 4. Sync стратегии: gitops/argocd/topic-4-sync-strategies.md
+      - 5. Безопасность и доступы: gitops/argocd/topic-5-security-access.md
+      - 6. Multi-cluster и multi-env: gitops/argocd/topic-6-multi-cluster-multi-env.md
+      - 7. Работа с Helm и Kustomize: gitops/argocd/topic-7-helm-kustomize.md
+      - 8. Production use cases: gitops/argocd/topic-8-production-use-cases.md
+      - 9. Наблюдаемость и troubleshooting: gitops/argocd/topic-9-observability-troubleshooting.md
+      - 10. Архитектура репозиториев: gitops/argocd/topic-10-gitops-repository-architecture.md
+      - 11. Интеграции: gitops/argocd/topic-11-integrations-ci-webhooks-and-notifications.md
+      - 12. Advanced (для уверенного Middle+): gitops/argocd/topic-12-advanced-image-updater-health-exclusions-performance-tuning.md
     - Flux: gitops/flux/flux.md
   - Observability:
     - Prometheus: observability/prometheus/prometheus.md
@@ -123,13 +146,26 @@ nav:
       - 8. Troubleshooting: message-broker/rabbitmq/topic-8-troubleshooting.md
       - 9. Security: message-broker/rabbitmq/topic-9-security.md
       - 10. Сравнение и контекст: message-broker/rabbitmq/topic-10-comparison-context.md
-    - Kafka: message-broker/kafka/kafka.md
+    - Kafka:
+      - Обзор: message-broker/kafka/kafka.md
+      - 1. База: message-broker/kafka/topic-1-basis.md
+      - 2. Установка и depлой: message-broker/kafka/topic-2-install-deploy.md
+      - 3. Хранение и производительность: message-broker/kafka/topic-3-storage-and-performance.md
+      - 4. Производительность и тюнинг: message-broker/kafka/topic-4-performance-tuning.md
+      - 5. Безопасность: message-broker/kafka/topic-5-security.md
+      - 6. Мониторинг и алертинг: message-broker/kafka/topic-6-monitoring-alerting.md
+      - 7. Kafka Connect: message-broker/kafka/topic-7-kafka-connect.md
+      - 8. CDC и Debezium: message-broker/kafka/topic-8-cdc-debezium.md
+      - 9. Отказоустойчивость и DR: message-broker/kafka/topic-9-fault-tolerance-and-dr.md
+      - 10. Эксплуатация и best practices: message-broker/kafka/topic-10-operations-best-practices.md
     - Nats: message-broker/nats/nats.md
-  - Обратная связь: contact/contact.md
+  - Хранилище секретов:
+    - HashiCorp Vault: vaults/hashicorp-vault/hashicorp-vault.md
 
 theme:
   name: material
   language: ru
+  custom_dir: overrides
   features:
     - content.code.copy
     - navigation.top
