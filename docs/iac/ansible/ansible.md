@@ -1,7 +1,9 @@
 # Ansible
 ![Ansible[200]](./images/welcome.png)
-## Разделы
 
+Ansible — инструмент с открытым исходным кодом для автоматизации задач по управлению, настройке и обслуживанию серверов или сетевых устройств. Обычно используется для управления Linux-узлами, но Windows также поддерживается.
+
+## Разделы
 - [**1. База: inventory, playbooks, переменные и шаблоны**](topic-1-basis.md) — static/dynamic inventory, структура playbook и flow выполнения, модули и idempotency, переменные (group_vars/host_vars), templates (Jinja2), handlers, tags; мини‑практика (Nginx + template, PostgreSQL, пользователи и SSH) и production best practices.
 - [**2. Поддерживаемые playbooks**](topic-2-clean-playbooks.md) — идемпотентность, `register/when/failed_when/changed_when`, loop’ы, `block/rescue/always`, includes vs imports, facts; практики: fallback, OS‑логика, rollback.
 - [**3. Архитектура проекта**](topic-3-project-architecture.md) — роли (структура, defaults vs vars), организация репозитория (roles/, inventories/, group_vars/), переиспользование через Ansible Galaxy/collections; практика: разбить большой playbook на роли.

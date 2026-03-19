@@ -1,4 +1,4 @@
-# 2. Установка и depлой: bare metal, Docker и Kubernetes
+# 2. Установка и deploy: bare metal, Docker и Kubernetes
 
 ---
 

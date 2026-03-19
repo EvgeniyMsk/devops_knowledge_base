@@ -84,7 +84,19 @@ nav:
       - 9. CI/CD и GitOps: k8s/k8s/topic-9-cicd-gitops.md
       - 10. Отладка и эксплуатация: k8s/k8s/topic-10-troubleshooting-production.md
       - 11. Архитектура и Best Practices: k8s/k8s/topic-11-architecture-best-practices.md
-    - Helm: k8s/helm/helm.md
+    - Helm:
+      - Обзор: k8s/helm/helm.md
+      - 1. Основы: k8s/helm/topic-1-basics.md
+      - 2. Шаблоны Helm: k8s/helm/topic-2-templates.md
+      - 3. Работа с values: k8s/helm/topic-3-values.md
+      - 4. Lifecycle и управление релизами: k8s/helm/topic-4-lifecycle-releases.md
+      - 5. Отладка Helm: k8s/helm/topic-5-debugging.md
+      - 6. Зависимости чартов: k8s/helm/topic-6-dependencies.md
+      - 7. Лучшие практики чартов: k8s/helm/topic-7-best-practices.md
+      - 8. Секреты и безопасность: k8s/helm/topic-8-secrets-security.md
+      - 9. Helm и CI/CD: k8s/helm/topic-9-helm-cicd.md
+      - 10. Helm в production: k8s/helm/topic-10-production.md
+      - 11. Helm и GitOps: k8s/helm/topic-11-helm-vs-gitops.md
   - CI/CD:
     - GitLab:
       - Обзор: ci-cd/gitlab/gitlab.md
@@ -115,8 +127,30 @@ nav:
       - 12. Advanced (для уверенного Middle+): gitops/argocd/topic-12-advanced-image-updater-health-exclusions-performance-tuning.md
     - Flux: gitops/flux/flux.md
   - Observability:
-    - Prometheus: observability/prometheus/prometheus.md
-    - Grafana: observability/grafana/grafana.md
+    - Prometheus:
+      - Обзор: observability/prometheus/prometheus.md
+      - 1. База: observability/prometheus/topic-1-basis.md
+      - 2. PromQL: observability/prometheus/topic-2-promql.md
+      - 3. Экспортеры и кастомные метрики: observability/prometheus/topic-3-exporters-and-custom-metrics.md
+      - 4. Алертинг (Alertmanager): observability/prometheus/topic-4-alerting-and-alertmanager.md
+      - 5. Работа с Kubernetes: observability/prometheus/topic-5-kubernetes.md
+      - 6. Grafana (визуализация): observability/prometheus/topic-6-grafana-visualization.md
+      - 7. Производительность и масштабирование: observability/prometheus/topic-7-performance-and-scaling.md
+      - 8. Лучшие практики: observability/prometheus/topic-8-best-practices.md
+      - 9. Устранение неполадок: observability/prometheus/topic-9-troubleshooting.md
+      - 10. Production-кейсы: observability/prometheus/topic-10-production-cases.md
+    - Grafana:
+      - Обзор: observability/grafana/grafana.md
+      - 1. База: observability/grafana/topic-1-basis.md
+      - 2. Дашборды и визуализация: observability/grafana/topic-2-dashboards.md
+      - 3. Prometheus и PromQL: observability/grafana/topic-3-prometheus-promql.md
+      - 4. Алертинг: observability/grafana/topic-4-alerting.md
+      - 5. Grafana и Kubernetes: observability/grafana/topic-5-kubernetes.md
+      - 6. Логи и трассы: observability/grafana/topic-6-logs-traces.md
+      - 7. Провижининг и GitOps: observability/grafana/topic-7-provisioning-gitops.md
+      - 8. Безопасность и доступы: observability/grafana/topic-8-security-access.md
+      - 9. Производительность и практики: observability/grafana/topic-9-performance-practices.md
+      - 10. Production-кейсы: observability/grafana/topic-10-production-scenarios.md
     - Loki: observability/loki/loki.md
     - Jaeger: observability/jaeger/jaeger.md
     - OpenTelemetry: observability/opentelemetry/opentelemetry.md
@@ -131,7 +165,18 @@ nav:
       - 5. Мониторинг и алертинг: database/postgresql/topic-5-monitoring-alerting.md
       - 6. Автоматизация и DevOps: database/postgresql/topic-6-automation-devops.md
     - MySQL: database/mysql.md
-    - MongoDB: database/mongodb.md
+    - MongoDB:
+      - Обзор: database/mongodb.md
+      - 1. База: database/mongodb/topic-1-basis.md
+      - 2. Архитектура: database/mongodb/topic-2-replica-architecture.md
+      - 3. Шардирование: database/mongodb/topic-3-sharding.md
+      - 4. Операционка: database/mongodb/topic-4-operations.md
+      - 5. Мониторинг: database/mongodb/topic-5-monitoring.md
+      - 6. Troubleshooting: database/mongodb/topic-6-troubleshooting.md
+      - 7. Безопасность: database/mongodb/topic-7-security.md
+      - 8. Production-практики: database/mongodb/topic-8-production-practices.md
+      - 9. Продвинутые темы: database/mongodb/topic-9-advanced.md
+      - 10. Интеграционная практика: database/mongodb/topic-10-integrated-lab.md
     - Redis: database/redis.md
   - Брокеры сообщений:
     - RabbitMQ:
@@ -160,7 +205,17 @@ nav:
       - 10. Эксплуатация и best practices: message-broker/kafka/topic-10-operations-best-practices.md
     - Nats: message-broker/nats/nats.md
   - Хранилище секретов:
-    - HashiCorp Vault: vaults/hashicorp-vault/hashicorp-vault.md
+    - HashiCorp Vault:
+      - Обзор: vaults/hashicorp-vault/hashicorp-vault.md
+      - 1. База: vaults/hashicorp-vault/topic-1-basis.md
+      - 2. Архитектура и развёртывание: vaults/hashicorp-vault/topic-2-architecture-and-deployment.md
+      - 3. Аутентификация: vaults/hashicorp-vault/topic-3-authentication.md
+      - 4. Secrets engines: vaults/hashicorp-vault/topic-4-secrets-engines.md
+      - 5. Интеграции: vaults/hashicorp-vault/topic-5-integrations.md
+      - 6. Безопасность и аудит: vaults/hashicorp-vault/topic-6-security-and-audit.md
+      - 7. Эксплуатация: vaults/hashicorp-vault/topic-7-operations.md
+      - 8. Продвинутые темы: vaults/hashicorp-vault/topic-8-advanced.md
+      - 9. Практика: vaults/hashicorp-vault/topic-9-capstone-project.md
 
 theme:
   name: material

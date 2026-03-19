@@ -1,8 +1,6 @@
 # Apache Kafka
 ![Apache Kafka](./images/welcome.png)
----
 Kafka — distributed log/message streaming платформа: позволяет организовывать поток событий, масштабировать обработку через consumer group’ы и добиваться отказоустойчивости благодаря replication.
----
 
 ## Материалы
 

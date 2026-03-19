@@ -1,8 +1,7 @@
 # Argo CD
 ![ArgoCD[200]](./images/welcome.webp)
----
 Argo CD — GitOps инструмент для управления Kubernetes приложениями через сравнение desired state (Git) и actual state (кластера). Он выполняет reconcile loop, показывает drift (например, `OutOfSync`) и позволяет безопасно синхронизировать изменения из репозитория.
----
+
 
 ## Материалы
 
