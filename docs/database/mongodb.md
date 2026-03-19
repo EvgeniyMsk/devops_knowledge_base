@@ -1,9 +1,7 @@
 # MongoDB
 
----
+![MongoDB[200]](./mongodb/images/welcome.jpg)
 **MongoDB** — документная **NoSQL** СУБД: **BSON**-документы, **коллекции**, **индексы**, горизонтальное масштабирование (**replica set**, **sharded cluster**) в enterprise-контурах. В материалах ниже — от основ до эксплуатации и production-паттернов.
-
----
 
 ## Материалы
 
