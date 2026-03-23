@@ -44,12 +44,12 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: eg
-  namespace: lev
+  namespace: yournamespace
 spec:
   gatewayClassName: eg
   addresses:
     - type: IPAddress
-      value: 155.0.104.231
+      value: 98.131.121.45
   listeners:
     - name: http-tester
       protocol: HTTP
@@ -60,12 +60,12 @@ spec:
     - name: https-tester
       protocol: HTTPS
       port: 443
-      hostname: grafana.askd.io
+      hostname: grafana.site.io
       tls:
         mode: Terminate
         certificateRefs:
           - kind: Secret
-            name: ingress-tls-grafana
+            name: secret-tls-grafana
       allowedRoutes:
         namespaces:
           from: All
@@ -80,14 +80,14 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: backend
-  namespace: lev
+  namespace: younamespace
 spec:
   parentRefs:
     - name: eg
-      namespace: lev
+      namespace: yournamespace
       sectionName: https-tester
   hostnames:
-    - "grafana.askd.io"
+    - "grafana.site.io"
   rules:
     - backendRefs:
         - group: ""
@@ -104,14 +104,14 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: backend-redirect-to-https
-  namespace: lev
+  namespace: yournamespace
 spec:
   parentRefs:
     - name: eg
-      namespace: lev
+      namespace: yournamespace
       sectionName: http-tester
   hostnames:
-    - "grafana.askd.io"
+    - "grafana.site.io"
   rules:
     - filters:
         - type: RequestRedirect
@@ -129,7 +129,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: basic-auth-users
-  namespace: lev
+  namespace: yournamespace
 type: Opaque
 stringData:
   .htpasswd: |
@@ -139,7 +139,7 @@ apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
   name: tester-basic-auth
-  namespace: lev
+  namespace: yournamespace
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
