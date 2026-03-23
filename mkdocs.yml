@@ -221,7 +221,37 @@ nav:
 theme:
   name: material
   language: ru
+  font:
+    text: Manrope
+    code: Roboto Mono
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  icon:
+    edit: fontawesome/solid/pencil
+    view: fontawesome/solid/eye
+    repo: fontawesome/brands/github
   custom_dir: overrides
+  user_color_mode_toggle: true
+  sidebar_hide_name: true
+  favicon: images/favicon.png
   features:
     - content.code.copy
     - navigation.top
@@ -230,4 +260,17 @@ theme:
     - navigation.tracking         # якорь в URL
     - navigation.tabs              # вкладки в шапке
     - navigation.path             # хлебные крошки
-    - toc.follow  
+    - toc.follow
+    - search.highlight
+    - search.share
+extra_css:
+  - stylesheets/extra.css
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+repo_url: https://github.com/EvgeniyMsk/devops_knowledge_base
+repo_name: DevOps база знаний
+edit_uri: edit/main/docs/
