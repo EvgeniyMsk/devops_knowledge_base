@@ -84,6 +84,7 @@ nav:
       - 9. CI/CD и GitOps: k8s/k8s/topic-9-cicd-gitops.md
       - 10. Отладка и эксплуатация: k8s/k8s/topic-10-troubleshooting-production.md
       - 11. Архитектура и Best Practices: k8s/k8s/topic-11-architecture-best-practices.md
+      - 12. Дополнительные материалы: k8s/k8s/topic-12-advanced-topics.md
     - Helm:
       - Обзор: k8s/helm/helm.md
       - 1. Основы: k8s/helm/topic-1-basics.md
