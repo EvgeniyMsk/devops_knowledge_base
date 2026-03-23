@@ -14,7 +14,7 @@ helm install eg oci://docker.io/envoyproxy/gateway-helm \
 
 Команда устанавливает Envoy Gateway в Kubernetes через Helm из OCI-репозитория.
 
-## Что означает каждый параметр
+#### Что означает каждый параметр
 
 - `helm install eg` — устанавливает релиз Helm с именем `eg`.
 - `oci://docker.io/envoyproxy/gateway-helm` — источник чарта `gateway-helm` в Docker Hub (OCI registry).
@@ -23,7 +23,7 @@ helm install eg oci://docker.io/envoyproxy/gateway-helm \
 - `--create-namespace` — создает namespace, если он еще не существует.
 - `--set kubernetesClusterDomain=k8s-cluster-dev.local` — задает домен кластера.
 
-## Зачем указывать `kubernetesClusterDomain`
+#### Зачем указывать `kubernetesClusterDomain`
 
 По умолчанию Kubernetes использует `cluster.local`.  
 В этом кластере используется `k8s-cluster-dev.local`, поэтому параметр нужен для корректной работы внутренних DNS-имен сервисов, которые использует Envoy Gateway.
