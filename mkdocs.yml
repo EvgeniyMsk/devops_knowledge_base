@@ -41,6 +41,7 @@ nav:
     - 8. Управление пакетами: linux/topic-8-package-management.md
     - 9. Linux и контейнеры: linux/topic-9-linux-containers.md
     - 10. Troubleshooting: linux/topic-10-troubleshooting-mindset.md
+    - 11. Дополнительные материалы: linux/topic-11-advanced-topics.md
   - IaC:
     - Ansible:
       - Обзор: iac/ansible/ansible.md
